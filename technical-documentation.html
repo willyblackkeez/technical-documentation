@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="technical-documentation.css">
+	<!--<link href="https://fonts.googleapis.com/css?family=Archivo" rel="stylesheet">-->
+</head>
+<body>
+
+	<div id="container">
+	
+		<nav id="navbar">
+			<header id="title">The Arduino</header>
+			<ul>
+				<li><a href="#introduction" class="nav-link">Introduction</a></li>
+				<li><a href="#first_sketch" class="nav-link">First Sketch</a></li>
+				<li><a href="#touring_the_IDE" class="nav-link">Touring the IDE</a></li>
+				<li><a href="#How_the_Sketch_Works" class="nav-link">How the Sketch Works</a></li>
+				<li><a href="#Structuring_an_Arduino_Program" class="nav-link">Structuring an Arduino Program</a></li>
+				<li><a href="#Using_Simple_Primitive_Types_(Variables)" class="nav-link">Using Simple Primitive Types (Variables)</a></li>
+				<li><a href="#Using_Floating-Point_Numbers" class="nav-link">Using Floating-Point Numbers</a></li>
+				<li><a href="#Working_with_Groups_of_Values" class="nav-link">Working with Groups of Values</a></li>
+				<li><a href="#Difference_between_analog_and_digital_pin" class="nav-link">Difference between analog and digital pin</a></li>
+				<li><a href="#Reading_a_potentiometer" class="nav-link">Reading a potentiometer</a></li>
+				<li><a href="#A_piezoelectric_transducer" class="nav-link">A piezoelectric transducer</a></li>
+				<li><a href="#Extending_the_Arduino_with_libraries" class="nav-link">Extending the Arduino with libraries</a></li>
+			</ul>
+		</nav>
+
+		<main id="main-doc">
+			<section class="main-section" id="introduction">
+				<header>Introduction</header>
+				<p>
+					The Arduino got its start at the Interaction Design Institute in the city of Ivrea, Italy, in 2005. Professor Massimo Banzi was looking for a low-cost way to make it easier for the design students there to work with technology. He discussed his problem with David Cuartielles, a researcher visiting from Malmö University in Sweden who was looking for a similar solution, and Arduino was born. Existing products on the market were expensive and relatively difficult to use. Banzi and Cuartielles decided to make a microcontroller that could be used by their art and design students in their projects. The main requirements were that it be inexpensive the target price was to be no more than a student would spend going out for a pizza—and be a platform that anyone could use. David Cuartielles designed the board, and a student of Massimo’s, David Mellis, programmed the software to run the board. Massimo contacted a local engineer, Gianluca Martino, who also worked at the Design Institute helping students with their projects. Gianluca agreed to produce an initial run of 200 boards.
+				</p>
+
+				<p>
+					What can the Arduino be used for? The answers are surprisingly diverse. The Arduino
+					has been used in a wide variety of projects:
+					<ul>
+						<li>Video games such as Pong and Space Invaders that will remind some readers of their childhood and introduce others to the games their parents played when they were young, complete with monochrome graphics and simple sound effects.
+						</li>
+						<li>
+							Line-following robots that introduce robotics principles but are also used in factories and warehouses to deliver components along predetermined paths.
+						</li>
+						<li>
+							Light harps that produce music with a wave of your hands, as used internationally by the performer Little Boots.
+						</li>
+						<li>
+							MIDI controllers that control a series of instruments.
+						</li>
+						<li>
+							Self-balancing robots that mimic the Segway.
+						</li>
+					</ul>
+				</p>
+				<p>
+					There have been a number of Arduino versions, all based on an 8-bit Atmel AVR reduced instruction set computer (RISC) microprocessor. The first board was based on the ATmega8 running at a clock speed of 16 MHz with 8 KB flash memory; later boards such as the Arduino NG plus and the Diecimila (Italian for 10,000) used the ATmega168 with 16 KB flash memory. The most recent Arduino versions, Duemilanove and Uno, use the ATmega328 with 32KB flash memory and can switch automatically between USB and DC power. For projects requiring more I/O and memory, there’s the Arduino Mega1280 with 128 KB memory or the more recent Arduino Mega2560 with 256 KB memory. The boards have 14 digital pins, each of which can be set as either an input or output, and six analog inputs. In addition, six of the digital pins can be programmed to provide a pulse width modulation (PWM) analog output. A variety of communication protocols are available, including serial, serial peripheral interface bus (SPI), and I2C/TWI. Included on each board as standard features are an in-circuit serial programming (ICSP) header and reset button.
+				</p>
+			</section>
+
+			<section class="main-section" id="first_sketch">
+				<header>First Sketch</header>
+				<p>
+					At the moment, your Arduino is just a board with some electronic components on it. To make it do some useful work, you need to give it instructions, which is why you need the Arduino software IDE. The Arduino software IDE provides everything required for programming the Arduino, including a number of example programs or sketches that demonstrate how to connect it to and communicate with some common devices, such as LEDs, LCDs, and some sensors. You’ll be glad to know that, just like the hardware, the software for Arduino is open source and can be freely downloaded from <a href="http://arduino.cc/en/Main/Software">http://arduino.cc/en/Main/Software</a>. Just make sure you download the correct version for your system. Versions of the IDE are available for Windows, Mac OS X, and Linux. 
+				</p>
+				<p>
+					LEDs are available in a range of colors, but the LED connected to pin 13 on the Arduino is normally green. The LED lights up when a current is applied to it, so you can use pin 13 like a switch. When you switch it on, it will light up the LED, and when you switch it off, it will turn off the LED. Let’s start by writing the sketch.
+				</p>
+				<p>Start up the Arduino IDE and copy the following code.</p>
+				
+				<div class="code">
+					<code>
+						void setup(){<br>
+							pinMode(13, OUTPUT);<br>
+							}<br>
+						void loop(){<br>
+							digitalWrite(13, HIGH);<br>
+							delay(1000);<br>
+							digitalWrite(13, LOW);<br>
+							delay(1000);<br>
+						}
+					</code>
+				</div>
+				<p>
+					Time to see if your sketch works! First, connect the Arduino to your computer via a USB cable. You now have a couple of settings to make between the software and the Arduino. First you need to set the board type. Select Tools > Board and then select the type of Arduino you’re using. See figure 1. Next, you need to set the serial port because the USB sees the Arduino as a serial connection. Select Tools > Serial Port and then choose your serial port (see figure 2). On a system using Mac OS X for an Arduino Uno, the port will be something like /dev/tty.usbmodem; for older boards like the Duemilanove or Diecimila, it will be something like /dev/tty.usbserial. On a Windows system, the port will be identified as something like COM3.
+				</p>
+
+				<figure>
+					<img src="image/figure 1.jpg" id="figure-1" alt="figure showing the types of boards on the IDE">
+					<figcaption>Figure 1</figcaption>
+				</figure>
+
+				<figure>
+					<img src="image/Figure 2.jpg" id="figure-2" alt="serial port">
+					<figcaption>Figure 2</figcaption>
+				</figure>
+
+				<p>
+					The next step is to click the Upload button in the IDE. See figure 3. Wait a few seconds, and the LED should start blinking at the rate of about once a second.
+				</p>
+
+				<figure>
+					<img src="image/figure 3.jpg" id="figure-3">
+					<figcaption>Figure 3</figcaption>
+				</figure>		
+				
+			</section>
+
+			<section class="main-section" id="touring_the_IDE">
+				<header>Touring the IDE</header>
+				<p>
+					As stated earlier, the IDE is based on Processing, which was designed for ease of use and ease of learning. The IDE provides everything you need to write and upload sketches (programs) to the Arduino. When the IDE is first loaded, it opens with a blank sketch; the sketch is automatically given a temporary name with a date reference. The name can be changed later to something more appropriate when you save the sketch. Figure 4 shows the IDE containing a sketch, with annotations for the various buttons and windows. The toolbar along the top of the main editor has the following functions:
+
+					<ul>
+						<li><em>Verify</em>—Checks sketches for errors. Errors are reported at the bottom of the screen.</li>
+						<li><em>New</em>—Opens a new sketch.</li>
+						<li><em>Open</em>—Opens up a list of previously-saved sketches and example sketches.</li>
+						<li><em>Save</em>—Saves the sketch and prompts for a name if this is the first save.</li>
+						<li><em>Upload</em>—Checks the code for errors before uploading the sketch to Arduino.</li>
+						<li><em>Serial monitor</em>—Opens the serial monitor in a new window (see figure 5. in the next section). At the bottom of the main screen are two windows. The first provides status information and feedback; the second provides information when you’re verifying and uploading sketches. Any coding errors will also be reported here. The code editor additionally matches the curly braces, {}, used to denote blocks of code, and it performs syntax highlighting and automatically indents your code for readability.
+						</li>
+					</ul>
+				</p>
+
+				<figure>
+					<img src="image/figure 4.jpg" id="figure-4" alt="arduino IDE">
+					<figcaption>Figure 4</figcaption>
+				</figure>
+
+				<h3>Serial monitor</h3>
+				<p>
+					The serial monitor mentioned in the previous section monitors data between the Arduino and the host computer system over the connected USB cable. The Arduino can send information using code, and it can also receive it. You can see this in figure 5.
+				</p>
+				<figure>
+					<img src="image/figure 5.jpg" alt="serial monitor">
+					<figcaption>Figure 5</figcaption>
+				</figure>
+
+				<p>
+					The top part of the serial monitor window is used for sending data to the Arduino. You could, for example, use it to send control commands to the Arduino to turn a servomotor a varying number of degrees, or to open or close a switch. The main part of the window displays data output from the Arduino. This could be used to check the output from a GPS or to perform other signal monitoring. The serial monitor is very useful for debugging code when linking the Arduino to a computer system running software that interacts in some way with the Arduino; you can use the serial monitor to check that the Arduino is outputting the correct data in the format expected. In the serial monitor, you can also set the baud rate used for communication, autoscroll of text, and the form of line ending that is appended to data sent to the Arduino.
+				</p>
+				<h3>Catching errors</h3>
+				<p>
+					Now let’s return to the main editor. The main area of the screen is the code editor where you type your code. Once you’ve finished inputting code, you have the option to either verify or upload your sketch to the Arduino. Any code errors are reported in the bottom window. We’ve introduced an error by omitting a semicolon (;) at the end of one of the lines of code. Details of the error are provided, as well as the line on which the error occurs. Hopefully the code checker can provide enough information to point you in the right direction if it doesn’t point out exactly what’s wrong. The code checker has correctly identified the missing ; and where the error occurred.
+				</p>
+				<h3>Process</h3>
+				<p>
+					What does the IDE actually do with your code? When you press the upload button, it checks the code for errors and performs some minor translations to convert the sketch to valid C++. The code is then compiled, which means it’s converted to a form that can be understood by the Arduino. The resulting file is then combined with the standard Arduino libraries before being uploaded to the Arduino hardware.
+				</p>
+			</section>
+
+
+			<section class="main-section" id="How_the_Sketch_Works">
+				<header>How The Sketch Works</header>
+				<p>
+					A typical sketch consists of two parts or routines: the first is the initialization routine called setup, and the second is a routine called loop, usually containing the main body of code. We’ll take a more detailed look at these two routines next.
+				</p>
+
+				<h3>A routine called setup</h3>
+				<p>
+					When you want to go out for a jog, there are things you must do before you can go: put on your shoes or trainers, get a bottle of water, and stretch. It’s the same with an Arduino. It must be prepared or set up before it can go to work. This setup is contained within an initialization routine or function appropriately called setup (see the following listing). Typical things you would do in setup include initializing digital pins—setting them as INPUT or OUTPUT—and setting the baud rate for serial communication.
+				</p>
+				<div class="code">
+					<code>
+						void setup()<br>
+							{<br>
+							pinMode(13,OUTPUT);<br>
+							Serial.begin(9600);<br>
+							}
+					</code>
+				</div>
+
+				<p>
+					The setup code in listing 2 sets digital pin 13 as an output and configures serial communication at baud rate 9600. The void in front of setup just means the function doesn’t return a value. Even if you don’t have anything to set up, the routine is still required or an error will be generated when verifying or uploading a sketch. Just type an empty function with a code comment:
+				</p>
+				<div class="code">
+					<code>
+						void setup(){<br>
+						// nothing to setup<br>
+						{
+					</code>
+				</div>
+				<p>Now let’s look at the other required function, loop.</p>
+
+				<h3>The endless loop</h3>
+				<p>
+					When you go for a jog, you keep running until you’re done (however you define done). It’s the same with an Arduino; it runs continually in a looping routine or function called loop until some condition is met or the Arduino is powered down. The following listing shows the loop for the blinking LED.
+				</p>
+				<div class="code">
+					<code>
+						void loop()<br>
+							{<br>
+							digitalWrite(13, HIGH);<br>
+							delay(1000);<br>
+							digitalWrite(13,LOW);<br>
+							delay(1000);<br>
+							}
+
+					</code>
+				</div>
+				<p>
+					In this case, the Arduino loops repeatedly, turning the LED on for a second and then off for a second, continuing until the Arduino is powered down.
+				</p>
+			</section>
+
+
+			<section class="main-section" id="Structuring_an_Arduino_Program">
+				<header>Structuring an Arduino Program</header>
+				<h3>Problem</h3>
+				<p>
+					You are new to programming and want to understand the building blocks of an Arduino program.
+				</p>
+				<h3>Solution</h3>
+				<p>
+					Programs for Arduino are usually referred to as sketches, to emphasize the agile nature of development. The terms sketch and program are interchangeable. Sketches contain code—the instructions the board will carry out. Code that needs to run only once (such as to set up the board for your application) should be placed in the setup function. Code to be run continuously after the initial setup has finished goes into the loop function. Here is a typical sketch:
+					<div class="code">
+						<code>
+							const int ledPin = 13; // LED connected to digital pin 13<br>
+							// The setup() method runs once, when the sketch starts<br>
+							void setup()<br>
+							{
+								pinMode(ledPin, OUTPUT); // initialize the digital pin as an output<br>
+							}<br>
+							// the loop() method runs over and over again,<br>
+							void loop()<br>
+							{<br>
+								digitalWrite(ledPin, HIGH); // turn the LED on<br>
+								delay(1000); // wait a second<br>
+								digitalWrite(ledPin, LOW); // turn the LED off<br>
+								delay(1000); // wait a second<br>
+							}
+						</code>
+					</div>
+				</p>
+				<p>
+					When the board finishes uploading the code, or is turned on once it contains this code, it starts at the top of the sketch and carries out the instructions sequentially. It runs the code in setup once and then goes through the code in loop. When it gets to the end of loop (marked by the closing bracket, }) it goes back to the beginning of loop.
+				</p>
+				<h3>Discussion</h3>
+				<p>
+					This example continuously flashes an LED by writing HIGH and LOW outputs to a pin. See Chapter 5 to learn more about using Arduino pins. When the sketch begins, the code in setup sets the pin mode (so it’s capable of lighting an LED). After the code in setup is completed, the code in loop is repeatedly called (to flash the LED) for as long as the Arduino board is powered on. You don’t need to know this to write Arduino sketches, but experienced C/C++ programmers may wonder where the expected <em>main()</em> entry point function has gone. It’s there, but it’s hidden under the covers by the Arduino build environment. The build process creates an intermediate file that includes the sketch code and the following additional statements:
+					<div class="code">
+						<code>
+							int main(void)<br>
+							{<br>
+								init();<br>
+								setup();<br>
+								for (;;)<br>
+								loop();<br>
+								return 0;<br>
+							}
+						</code>
+					</div>
+				</p>
+				<p>
+					The first thing that happens is a call to an <em>init()</em> function that initializes the Arduino hardware. Next, the sketch’s <em>setup()</em> function is called. Finally, the <em>loop()</em> function is called over and over. Because the <em>for</em> loop never terminates, the <em>return</em> statement is never executed.
+				</p>
+			</section>
+
+			<section class="main-section" id="Using_Simple_Primitive_Types_(Variables)">
+				<header>Using Simple Primitive Types (Variables)</header>
+				<h3>Problem</h3>
+				<p>
+					Arduino has different types of variables to efficiently represent values. You want to know how to select and use these Arduino data types.
+				</p>
+				<h3>Solution</h3>
+				<p>
+					Although the int (short for integer, a 16-bit value in Arduino) data type is the most common choice for the numeric values encountered in Arduino applications, you can use Table 2-1 to determine the data type that fits the range of values your application expects.
+					<table>
+						<caption><em>Table 2-1. Arduino data types</em></caption>
+						<tr class="table-header">
+							<th>Numeric types</th>
+							<th>Bytes</th>
+							<th>Range</th>
+							<th>Use</th>
+						</tr>
+						<tr>
+							<td>int</td>
+							<td>2</td>
+							<td>-32768 to 32767</td>
+							<td>Represents positive and negative integer values.</td>
+						</tr>
+						<tr>
+							<td>unsigned int</td>
+							<td>2</td>
+							<td>0 to 65535 </td>
+							<td>Represents only positive values; otherwise, similar to int.</td>
+						</tr>
+						<tr>
+							<td>long</td>
+							<td>4</td>
+							<td>-2147483648 to 2147483647</td>
+							<td>Represents a very large range of positive and negative values.</td>
+						</tr>
+						<tr>
+							<td>unsigned long</td>
+							<td>4</td>
+							<td>4294967295</td>
+							<td>Represents a very large range of positive values.</td>
+						</tr>
+						<tr>
+							<td>float</td>
+							<td>4</td>
+							<td>3.4028235E+38 to -3.4028235E+38</td>
+							<td>Represents numbers with fractions; use to approximate realworld measurements.</td>
+						</tr>
+						<tr>
+							<td>double</td>
+							<td>4</td>
+							<td>Same as <em>float</em></td>
+							<td>In Arduino, double is just another name for <em>float</em>.</td>
+						</tr>
+						<tr>
+							<td>boolean</td>
+							<td>1</td>
+							<td><em>false</em> (0) or <em>true</em> (1)</td>
+							<td>Represents <em>true</em> and <em>false</em> values.</td>
+						</tr>
+						<tr>
+							<td>char</td>
+							<td>1</td>
+							<td>-128 to 127</td>
+							<td>Represents a single character. Can also represent a signed value between -128 and 127.</td>
+						</tr>
+						<tr>
+							<td>byte</td>
+							<td>1</td>
+							<td>0 to 255</td>
+							<td>similar to <em>char</em>, but for unsigned values.</td>
+						</tr>
+						<tr class="table-header" id="second-header">
+							<th>Other types</th>
+						</tr>
+						<tr>
+							<td>string</td>
+							<td>Represents arrays of chars (characters) typically used to contain text.</td>
+						</tr>
+						<tr>
+							<td>void</td>
+							<td>Used only in function declarations where no value is returned.</td>
+						</tr>
+					</table>
+				</p>
+				<h3>Discussion</h3>
+				<p>Except in situations where maximum performance or memory efficiency is required, variables declared using <em>int</em> will be suitable for numeric values if the values do not exceed the range (shown in the first row in Table 2-1) and if you don’t need to work with fractional values. Most of the official Arduino example code declares numeric variables as <em>int</em>. But sometimes you do need to choose a type that specifically suits your application.</p>
+				<p>Sometimes you need negative numbers and sometimes you don’t, so numeric types come in two varieties: <em>signed</em> and <em>unsigned</em>. <em>unsigned</em> values are always positive. Variables without the keyword <em>unsigned</em> in front are signed so that they can represent negative and positive values. One reason to use <em>unsigned</em> values is when the range of <em>signed</em> values will not fit the range of the variable (an <em>unsigned</em> variable has twice the capacity of a <em>signed</em> variable). Another reason programmers choose to use <em>unsigned</em> types is to clearly indicate to people reading the code that the value expected will never be a negative number.</p>
+				<p>boolean types have two possible values: true or false. They are commonly used for things like checking the state of a switch (if it’s pressed or not). You can also use HIGH and LOW as equivalents to true and false where this makes more sense; digital Write(pin, HIGH) is a more expressive way to turn on an LED than digitalWrite(pin, true) or digitalWrite(pin,1), although all of these are treated identically when the sketch actually runs, and you are likely to come across all of these forms in code posted on the Web.</p>
+			</section>
+			<section class="main-section" id="Using_Floating-Point_Numbers">
+				<header>Using Floating-Point Numbers</header>
+				<h3>Problem</h3>
+				<p>Floating-point numbers are used for values expressed with decimal points (this is the way to represent fractional values). You want to calculate and compare these values in your sketch.</p>
+				<h3>Solution</h3>
+				<p>The following code shows how to declare floating-point variables, illustrates problems you can encounter when comparing floating-point values, and demonstrates how to overcome them:
+					<div class="code">
+						<code>
+							/*<br>
+							* Floating-point example<br>
+							* This sketch initialized a float value to 1.1<br>
+							* It repeatedly reduces the value by 0.1 until the value is 0<br>
+							*/<br>
+							float value = 1.1;<br>
+							void setup()<br>
+							{<br>
+								Serial.begin(9600);<br>
+							}<br>
+							void loop()<br>
+							{<br>
+								value = value - 0.1; // reduce value by 0.1 each time through the loop<br>
+								if( value == 0)<br>
+								Serial.println("The value is exactly zero");<br>
+								else if(fabs(value) < .0001) // function to take the absolute value of a float<br>
+								Serial.println("The value is close enough to zero");<br>
+								else<br>
+								Serial.println(value);<br>
+								delay(100);<br>
+							}
+						</code>
+					</div>
+				</p>
+				<h3>Discussion</h3>
+				<p>Floating-point math is not exact, and values returned can have a small approximation error. The error occurs because floating-point values cover a huge range, so the internal representation of the value can only hold an approximation. Because of this, you need to test if the values are within a range of tolerance rather than exactly equal.</p>
+				<p>The outout from tis sketch is as follows:</p>
+				<ul class="result">
+					<li>1.00</li>
+					<li>0.90</li>
+					<li>0.80</li>
+					<li>0.70</li>
+					<li>0.60</li>
+					<li>0.50</li>
+					<li>0.40</li>
+					<li>0.30</li>
+					<li>0.20</li>
+					<li>0.10</li>
+					<li>The value is close enough to zero</li>
+					<li>-0.10</li>
+					<li>-0.20</li>
+				</ul>
+				<p>The output continues to produce negative numbers.</p>
+				<p>You may expect the loop to stop after value is 0.1 and then 0.1 is subtracted from this. But value never equals zero; it gets very close, but that is not good enough to pass the test <code>if (value == 0)</code>. This is because the only memory-efficient way that floating-point numbers can contain the huge range in values they can represent is by storing an approximation of the number</p>
+				<p>The solution to this is to check if a variable is close to the desired value, as shown in the code in this recipe’s Solution:
+					<div class="code">
+						<code>
+							else if(fabs(value) < .0001) // function to take absolute value of a float<br>
+							Serial.println("The value is close enough to zero");
+						</code>
+					</div></p>
+				<p>
+					This tests if the variable value is within 0.0001 of the desired target and prints a message if so. The function named fabs (short for floating-point absolute value) returns the absolute value of a floating-point variable. The function returns the magnitude of the value, and if this is within 0.0001 of 0, the code will print the message that the values are close enough.
+				</p>
+			</section>
+			<section class="main-section" id="Working_with_Groups_of_Values">
+				<header>Working with Groups of Values</header>
+				<h3>Problem</h3>
+				<p>You want to create and use a group of values (called arrays). The arrays may be a simple list or they could have two or more dimensions. You want to know how to determine the size of the array and how to access the elements in the array.</p>
+				<h3>Solution</h3>
+				<p>This sketch creates two arrays: an array of integers for pins connected to switches and an array of pins connected to LEDs.
+					<div class="code">
+						<code>
+							/*<br>
+							array sketch<br>
+							an array of switches controls an array of LEDs<br>
+							see Chapter 5 for more on using switches<br>
+							see Chapter 7 for information on LEDs<br>
+							*/<br>
+							int inputPins[] = {2,3,4,5}; // create an array of pins for switch inputs<br>
+							int ledPins[] = {10,11,12,13}; // create array of output pins for LEDs<br>
+							void setup()<br>
+							{
+								for(int index = 0; index < 4; index++)<br>
+								{<br>
+								pinMode(ledPins[index], OUTPUT); // declare LED as output<br>
+								pinMode(inputPins[index], INPUT); // declare pushbutton as input<br>
+								digitalWrite(inputPins[index],HIGH); // enable pull-up resistors<br>
+								//(see Recipe 5.2)<br>
+								}<br>
+							}<br>
+							void loop(){<br>
+								for(int index = 0; index < 4; index++)<br>
+									{<br>
+										int val = digitalRead(inputPins[i]); // read input value<br>
+										if (val == LOW) // check if the switch is pressed<br>
+									{<br>
+										digitalWrite(ledPins[index], HIGH); // turn LED on if switch is pressed<br>
+									}<br>
+									else<br>
+									{<br>
+										digitalWrite(ledPins[i], LOW); // turn LED off<br>
+									}<br>
+								}<br>
+							}
+						</code>
+					</div></p>
+				<h3>Discussion</h3>
+				<p>
+					Arrays are collections of consecutive variables of the same type. Each variable in the collection is called an element. The number of elements is called the dimension of the array.
+				</p>
+				<p>
+					The preceding example demonstrates a common use of arrays in Arduino code: storing a collection of pins. Here the pins connect to switches and LEDs (a topic covered in more detail in Chapter 5). The important parts of this example are the declaration of the array and access to the array elements.
+				</p>
+				<p>
+					The following line of code declares (creates) an array of integers with four elements and initializes each element. The first element is set equal to 2, the second to 3, and so on:
+					<div class="code">
+						<code>int inputPins[] = {2,3,4,5};</code>
+					</div>
+				</p>
+				<p>
+					If you don’t need to initialize the values when you declare an array (perhaps the values will only be available when the sketch is running) you can declare the array as follows:
+					<div class="code"><code>int array[4];</code></div>
+				</p>
+				<p>
+					This declares an array of four elements with the initial value of each element set to zero. The number within the square brackets ([]) is the dimension, and this sets the number of elements. This array has a dimension of four and can hold, at most, four integer values. The dimension can be omitted if array declaration contains initializers (as shown in the first example) because the compiler figures out how big to make the array by counting the number of initializers.
+				</p>
+				<p>The first element of the array is <em>element[0]</em>:
+					<div class="code">
+						<code>int firstElement = inputPin[0]; // this is the first element</code>
+					</div></p>
+				<p>
+					The last element is one less than the dimension, so in the preceding example, with a dimension of four, the last element is element 3:
+					<div class="code"><code>Int lastElement = inputPin[3]; // this is the last element</code></div>
+				</p>
+				<p>
+					It may seem odd that an array with a dimension of four has the last element accessed using <em>array[3]</em>, but because the first element is <em>array[0]</em>, the four elements are:
+					<div class="code"><code>array[0],array[1],array[2],array[3]</code></div>
+				</p>
+				<p>
+					In the previous sketch, the four elements are accessed using a for loop:
+					<div class="code"><code>
+						for(int index = 0; index < 4; index++)<br>
+							{<br>
+								//get the pin number by accessing each element in the pin arrays<br>
+								pinMode(ledPins[index], OUTPUT); // declare LED as output<br>
+								pinMode(inputPins[index], INPUT); // declare pushbutton as input<br>
+							}
+					</code></div>
+				</p>
+
+
+			</section>
+
+
+			<section class="main-section" id="Difference_between_analog_and_digital_pin">
+				<header>Difference between analog and digital pin</header>
+				<p>
+					So what’s the difference between the analog and digital worlds? In the digital world, everything has two states; a switch can only be on or off, an LED is either lit or it isn’t, you’re either awake or asleep. These states can be thought of in a variety of ways as ones or zeros, on or off, high or low. The Arduino digital pins work in the same way; when set as an output, they’re either 0 or 5 volts, with a 0 voltage being a logical zero and 5 volts being logical one. In the analog world, things have a range of values. Music has notes that span a range of frequencies, a car accelerates through a range of speeds, a sine wave flows smoothly between maximum and minimum values, and temperature varies between a maximum and minimum. We often want to explore the analog world, and the Arduino has six analog inputs that help us with this. But the Arduino is still a digital device, so you need a means of converting the input signal to a digital representation. This is done with an analog-to digital converter (ADC). Table 3.1 shows the resolution, voltage range, and pins used for analog input and output for the Arduino and Arduino Mega. In the next section, you’re going to use a potentiometer to provide an analog input that you can manually vary, and you’ll instantly see the effect of these changes by displaying the results using the serial monitor.
+				</p>
+			</section>
+
+
+			<section class="main-section" id="Reading_a_potentiometer">
+				<header>Reading a potentiometer</header>
+				<p>
+					A potentiometer is one of the simplest ways to show how the Arduino’s analog input works. Potentiometers come in all shapes and sizes, and they’re used in many different devices all around us. If you have a stereo with a rotary volume control, it’s likely based on turning a potentiometer. Other examples include dimmer controls on lights and temperature controls on electric cookers or ovens. Despite the different shapes and sizes, they all have some means of varying resistance, either in a linear or logarithmic way. The majority of potentiometers have three connections; the middle one is usually called the wiper and is used to vary the resistance by moving a contact along a fixed resistor.  
+				</p>
+				<h3>Connecting the hardware</h3>
+				<p>
+					Now that you know which potentiometer to use, let’s get it set up. Say the potentiometer is to R1 connected between five volts and ground, with the wiper connected to analog input A0. As you turn the potentiometer clockwise or counterclockwise, you’ll adjust the voltage between 0 and 5 volts on A0. Plug the potentiometer into the breadboard. The central leg is normally the wiper, and this is the one you want to connect to your analog input, A0.  With the potentiometer connected, you can move on to writing a sketch to read values from it.
+				</p>
+				<h3>Sketch to read a potentiometer</h3>
+				<p>
+					The following listing shows the sketch you’re going to use to read an analog value between 0 and 5 volts into analog pin A0.
+				</p>
+				<div class="code">
+					<code>
+						int sensorPin = A0;<br>
+						int sensorValue = 0;<br>
+						void setup(){<br>
+							Serial.begin(9600);<br>
+						}<br>
+						void loop(){<br>
+							sensorValue = analogRead(sensorPin);<br>
+							Serial.print("Sensor = ");<br>
+							Serial.println(sensorValue, DEC);<br>
+							delay(10);
+						}
+
+					</code>
+				</div>
+				<p>
+					You don’t need to set the sensorPin as an input during the setup routine because all analog input pins are set by default to be input. The sensorValue variable stores the value read by the analogRead function, which returns a number between 0 and 1023 inclusive, with 0 representing 0 volts and 1023 representing 5 volts. The 10 millisecond delay between each reading gives the Arduino’s ADC time to settle and capture an accurate reading. The DEC in the Serial.println(sensorValue, DEC); line instructs the println function to output data as base decimal. Other options include HEX (hexadecimal), BIN (binary), and OCT (octal). 
+				</p>
+				<p>
+					After entering the sketch into the IDE, verify that it compiles, and then connect the Arduino to your computer and upload the sketch to it. Load the serial monitor in the IDE and rotate the potentiometer fully clockwise and counterclockwise. You should see the number output to the serial monitor changing as the potentiometer is rotated.
+				</p>
+			</section>
+			<section class="main-section" id="A_piezoelectric_transducer">
+				<header>A piezoelectric transducer</header>
+				<p>
+					If you’ve ever received a birthday card that plays a tinny version of “I’m So Excited” by the Pointer Sisters when opened, you’ve likely encountered a piezoelectric transducer being used as a speaker. Piezoelectric transducers are also found in a variety of other devices, including mobile phones, door buzzers, and underwater sonar.
+				</p>
+				<p>
+					How do they work? The word piezoelectricity means “electricity resulting from pressure.” When a piezoelectric device is squeezed, it produces an electric charge. A typical application for this with an Arduino is to use the transducer as a knock sensor. When the transducer is hit or knocked, the Arduino detects this and performs the required action, such as switching on an LED or producing a tone from a speaker. Conversely, when an electric charge is applied to a piezoelectric transducer, it distorts or changes shape. If you apply a varying voltage at a certain frequency, the movement of the transducer can cause it to produce a sound or note. It’s in this mode that piezoelectric transducers are used in musical greeting cards or as buzzers. As you’ve seen, a single piezoelectric transducer can be used either as an input or an output device. Sonar devices, which have at their heart a piezoelectric transducer, send out a sound signal and listen for the echo. This is most familiar as the classic ping sound in submarine movies. The time it takes for the ping to return gives an indication of how far away a target is. Now that you’ve had a quick look at piezoelectric transducers and how they work, you’re going to use a piezoelectric transducer as a knock sensor. When the Arduino detects that the knock sensor has been hit or knocked, it will light up an LED.
+				</p>
+				<p>
+					Black wire connects to the GND part of the circuit, and the red connects to the Arduino’s analog input A0. The zener diode needs to be connected the correct way so that it protects the Arduino’s analog input from any voltages exceeding 5 volts. Conventionally, the cathode or negative end of the diode, normally designated with a black band, would be connected to GND, but in your circuit you’re going to reverse-bias the diode and connect it the other way so that the cathode is connected to the positive side of the circuit. The zener diode works by only conducting electricity when its breakdown voltage is exceeded, which in this case is 5.1 volts. Any voltages over 5.1 volts will cause the diode to connect and short circuit the voltage to GND, thus protecting the input of the Arduino. When the three components have been connected to the breadboard, you can make the final connections to the Arduino’s GND and analog input A0
+				</p>
+				<h3>Sketch to measure output from a piezoelectric transducer</h3>
+				<p>
+					To start with, you’re going to use the sketch that was shown in the code below. If you didn’t save the sketch before, create a new sketch and type in the code Go ahead and plug in the Arduino to the USB port, upload your sketch, and start the serial monitor. Initially the serial monitor should just print 0 values. Now try lightly hitting or squeezing the transducer, and notice how the sensor values change. When the transducer is hit, the numbers should quickly rise to a maximum value and then fall back to 0. The differing values indicate how hard the transducer is squeezed or hit: the higher the value, the harder it has been hit or squeezed. If nothing happens, check your connections, paying careful attention to the orientation of the transducer and the zener diode. You’re now going to amend your sketch so that only values over a certain threshold are printed. You can either alter your existing potentiometer sketch or create a new one. The new sketch is shown in the following listing; save this sketch as threshold.
+
+				</p>
+				<div class="code">
+					<code>
+						int sensorPin = A0;<br>
+						int sensorValue = 0;<br>
+						int threshold = 200;<br>
+						void setup(){<br>
+							Serial.begin(9600);<br>
+						}<br>
+						void loop(){<br>
+							sensorValue = analogRead(sensorPin);<br>
+							if (sensorValue > threshold) {<br>
+							Serial.print("Sensor = ");<br>
+							Serial.println(sensorValue, DEC);<br>
+						}<br>
+							delay(10);<br>
+						}
+
+					</code>
+					<p>
+						After entering the sketch, verify that it compiles and then upload it to the Arduino. Load the serial monitor and try hitting the transducer with varying degrees of force. Note that the harder you hit it, the higher the sensor value that’s returned. Now you have a sketch that checks the value at analog input A0 and prints the value if it exceeds a certain threshold. Next, you want to make it do something more useful than just report a value. If you added a speaker to your circuit, you could get the Arduino to play a note or tone when the piezoelectric transducer is hit.
+					</p>
+				</div>
+			</section>
+			<section class="main-section" id="Extending_the_Arduino_with_libraries">
+				<header>Extending the Arduino with libraries</header>
+				<p>
+					In the software world, a library is a piece of software that provides some sort of functionality, such as writing text to an LCD screen or calculating your position from a GPS navigation system. Software libraries work in the same way as conventional reference libraries: you request information and then use it within your project. Imagine you’re working on a research project: you take a reference book out of a library and use the parts you need in your project. It’s exactly the same with a software library.
+				</p>
+				<p>
+					In the Arduino world, a library is a piece of software that you include in your sketch and that provides some form of functionality. For example, there’s a Liquid-Crystal library that, when included in your sketch, will give you the ability to communicate simply with some LCD displays. A library is often used many times across many projects.
+				</p>
+				<p>
+					Some libraries can be used on their own, whereas others need to be used with additional electronic components, often in the form of shields. We’ll cover the use of shields later in this chapter. There are three different types of Arduino libraries: core, standard, and contributed. We’ll start with the built-in core library.
+
+				</p>
+				<h3>Core Library</h3>
+				<p>
+					The core library is built into the main Arduino IDE and is central to what makes the Arduino such a great device for both beginners and more experienced users. The core library hides much of the complexity traditionally involved when working with a microcontroller. Members of the Arduino development team, who were involved with teaching students how to use microcontrollers in their projects, recognized that the downfall of many traditional microcontrollers was the difficulty of programming them. They looked at what actions many of their students wanted to perform with a microcontroller and, based on this, designed a core library that makes these actions easy to perform. Most projects read data in (input) or write data out (output), and the core library makes these common tasks simple to execute. For example, to read the value of a digital pin, you just need to use the easily remembered digitalRead. Other common functions you’ve already used include digitalWrite and analogRead. In your last project, the pentatonic keyboard, you used another core function, Tone, to output sound to a loudspeaker, and you used the Serial functions to send code output to the serial monitor:
+					<ul>
+						<li>Serial.begin(9600)</li>
+						<li>Serial.print("Hello World")</li>
+					</ul>
+				</p>
+
+				<h3>Standard libraries</h3>
+				<p>
+					When you downloaded and installed the Arduino IDE, some standard libraries were included with the installation. The standard libraries are ones that the Arduino development team thinks will be needed by many people in their own projects. They aren’t included by default in your projects like the core library, because the Arduino has limited resources; automatically including the libraries would be a waste of these resources, leaving little room for code in your own sketches.
+				</p>
+				<p>
+					To use the standard libraries, you have to explicitly include them in your sketches. To do so, you need to add an include statement at the top of your sketch. For example, if you wanted to include the LiquidCrystal library, which is used to display data on an LCD screen, you would place the following at the top of your sketch: 
+				</p>
+				<!--<div class="code"><code>#include <LiquidCrystal.h> </code></div>-->
+			</section>
+		</main>
+
+	</div>
+
+</body>
+</html>
